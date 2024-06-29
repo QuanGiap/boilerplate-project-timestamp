@@ -22,14 +22,16 @@ app.get("/", function (req, res) {
 // your first API endpoint... 
 app.get("/api/:date", function (req, res) {
   const datestr = req.params.date;
-  console.log(datestr);
   let date = new Date(datestr);
   if(!date.getTime()) date = new Date(Number(datestr));
   if(!date.getTime()) return res.json({ error : "Invalid Date" });
   return res.json({unix: date.getTime(),utx:date.toUTCString()});
 });
 
-
+app.get("/api/", function (req, res) {
+  console.log("called here");
+  return res.json({unix: Date.now(),utx:Date.UTC()});
+});
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
